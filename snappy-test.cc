@@ -47,10 +47,20 @@ namespace snappy {
 
 string ReadTestDataFile(const string& base, size_t size_limit) {
   string contents;
+#ifdef _MSC_VER
+  char* srcdir = NULL;
+  size_t srcdirlen = 0;
+  if (_dupenv_s(&srcdir, &srcdirlen, "srcdir") != 0) // This is set by Automake.
+     srcdir = NULL;
+#else
   const char* srcdir = getenv("srcdir");  // This is set by Automake.
+#endif
   string prefix;
   if (srcdir) {
     prefix = string(srcdir) + "/";
+#ifdef _MSC_VER
+    free(srcdir);
+#endif
   }
   file::GetContents(prefix + "testdata/" + base, &contents, file::Defaults()
       ).CheckSuccess();
@@ -68,9 +78,14 @@ string StringPrintf(const char* format, ...) {
   char buf[4096];
   va_list ap;
   va_start(ap, format);
+  int const n =
+#ifdef _MSC_VER
+  _vsnprintf_s(buf, _TRUNCATE, format, ap);
+#else
   vsnprintf(buf, sizeof(buf), format, ap);
+#endif
   va_end(ap);
-  return buf;
+  return string(buf, (0 <= n && n < sizeof(buf)) ? n : (sizeof(buf)-1));
 }
 
 bool benchmark_running = false;
@@ -122,7 +137,7 @@ void StopBenchmarkTiming() {
   double elapsed_real = static_cast<double>(
       benchmark_stop_real.QuadPart - benchmark_start_real.QuadPart) /
       benchmark_frequency.QuadPart;
-  benchmark_real_time_us += elapsed_real * 1e6 + 0.5;
+  benchmark_real_time_us += static_cast<int64>(elapsed_real * 1e6 + 0.5);
 
   FILETIME benchmark_stop_cpu, dummy;
   CHECK(GetProcessTimes(
@@ -186,7 +201,7 @@ void Benchmark::Run() {
   for (int test_case_num = start_; test_case_num <= stop_; ++test_case_num) {
     // Run a few iterations first to find out approximately how fast
     // the benchmark is.
-    const int kCalibrateIterations = 100;
+    const int64 kCalibrateIterations = 100;
     ResetBenchmarkTiming();
     StartBenchmarkTiming();
     (*function_)(kCalibrateIterations, test_case_num);
@@ -197,7 +212,7 @@ void Benchmark::Run() {
     // Run five times and pick the median.
     const int kNumRuns = 5;
     const int kMedianPos = kNumRuns / 2;
-    int num_iterations = 0;
+    int64 num_iterations = 0;
     if (benchmark_real_time_us > 0) {
       num_iterations = 200000 * kCalibrateIterations / benchmark_real_time_us;
     }
@@ -207,7 +222,7 @@ void Benchmark::Run() {
     for (int run = 0; run < kNumRuns; ++run) {
       ResetBenchmarkTiming();
       StartBenchmarkTiming();
-      (*function_)(num_iterations, test_case_num);
+      (*function_)(static_cast<int>(num_iterations), test_case_num);
       StopBenchmarkTiming();
 
       benchmark_runs[run].real_time_us = benchmark_real_time_us;
@@ -229,7 +244,7 @@ void Benchmark::Run() {
       int64 bytes_per_second =
           benchmark_bytes_processed * 1000000 / cpu_time_us;
       if (bytes_per_second < 1024) {
-        human_readable_speed = StringPrintf("%dB/s", bytes_per_second);
+        human_readable_speed = StringPrintf("%dB/s", static_cast<int>(bytes_per_second));
       } else if (bytes_per_second < 1024 * 1024) {
         human_readable_speed = StringPrintf(
             "%.1fkB/s", bytes_per_second / 1024.0f);
@@ -243,10 +258,10 @@ void Benchmark::Run() {
     }
 
     fprintf(stderr,
-#ifdef WIN32
-            "%-18s %10I64d %10I64d %10d %s  %s\n",
+#if defined(_MSC_VER) && _MSC_VER < 1600
+            "%-18s %10I64d %10I64d %10I64d %12s  %s\n",
 #else
-            "%-18s %10lld %10lld %10d %s  %s\n",
+            "%-18s %10lld %10lld %10lld %12s  %s\n",
 #endif
             heading.c_str(),
             static_cast<long long>(real_time_us * 1000 / num_iterations),

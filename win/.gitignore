@@ -1,0 +1,8 @@
+.svn
+Debug
+Release
+snappy
+snappy-static
+snappy_unittest
+snappy_unittest-static
+x64

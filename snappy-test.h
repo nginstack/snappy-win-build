@@ -139,7 +139,12 @@ namespace file {
   };
 
   DummyStatus GetContents(const string& filename, string* data, int unused) {
+#ifdef _MSC_VER
+    FILE* fp = NULL;
+    if (fopen_s(&fp, filename.c_str(), "rb") != 0) fp = NULL;
+#else
     FILE* fp = fopen(filename.c_str(), "rb");
+#endif
     if (fp == NULL) {
       perror(filename.c_str());
       exit(1);
@@ -164,13 +169,18 @@ namespace file {
   DummyStatus SetContents(const string& filename,
                           const string& str,
                           int unused) {
+#ifdef _MSC_VER
+    FILE* fp = NULL;
+    if (fopen_s(&fp, filename.c_str(), "wb") != 0) fp = NULL;
+#else
     FILE* fp = fopen(filename.c_str(), "wb");
+#endif
     if (fp == NULL) {
       perror(filename.c_str());
       exit(1);
     }
 
-    int ret = fwrite(str.data(), str.size(), 1, fp);
+    size_t ret = fwrite(str.data(), str.size(), 1, fp);
     if (ret != 1) {
       perror("fwrite");
       exit(1);
@@ -245,7 +255,7 @@ inline int32 ACMRandom::Next() {
   uint64 product = seed_ * A;
 
   // Compute (product % M) using the fact that ((x << 31) % M) == x.
-  seed_ = (product >> 31) + (product & M);
+  seed_ = static_cast<uint32>((product >> 31) + (product & M));
   // The first reduction may overflow by 1 bit, so we may need to repeat.
   // mod == M is not possible; using > allows the faster sign-bit-based test.
   if (seed_ > M) {
@@ -282,7 +292,7 @@ class CycleTimer {
 
     double elapsed = static_cast<double>(stop.QuadPart - start_.QuadPart) /
         frequency.QuadPart;
-    real_time_us_ += elapsed * 1e6 + 0.5;
+    real_time_us_ += static_cast<int64>(elapsed * 1e6 + 0.5);
 #else
     struct timeval stop;
     gettimeofday(&stop, NULL);
@@ -476,7 +486,7 @@ static void RunSpecifiedBenchmarks() {
 #ifndef NDEBUG
   fprintf(stderr, "WARNING: Compiled with assertions enabled, will be slow.\n");
 #endif
-#ifndef __OPTIMIZE__
+#if !(defined(__GNUC__) && defined(__OPTIMIZE__)) && !(defined(_MSC_VER) && defined(NDEBUG))
   fprintf(stderr, "WARNING: Compiled without optimization, will be slow.\n");
 #endif
   fprintf(stderr, "Benchmark            Time(ns)    CPU(ns) Iterations\n");
@@ -532,12 +542,9 @@ class LogMessage {
     cerr << endl;
   }
 
-  LogMessage& operator<<(const std::string& msg) {
-    cerr << msg;
-    return *this;
-  }
-  LogMessage& operator<<(int x) {
-    cerr << x;
+  template<typename _T>
+  LogMessage& operator<<(const _T& value) {
+    cerr << value;
     return *this;
   }
 };
