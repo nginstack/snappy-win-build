@@ -146,9 +146,9 @@
     <ClInclude Include="..\snappy-sinksource.h" />
     <ClInclude Include="..\snappy-stubs-internal.h" />
     <ClInclude Include="..\snappy.h" />
-    <ClInclude Include="config.h" />
-    <ClInclude Include="snappy-dll.h" />
-    <ClInclude Include="snappy-stubs-public.h" />
+    <ClInclude Include="..\win32\config.h" />
+    <ClInclude Include="..\win32\snappy-dll.h" />
+    <ClInclude Include="..\win32\snappy-stubs-public.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

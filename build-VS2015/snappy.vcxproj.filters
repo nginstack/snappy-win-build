@@ -13,7 +13,7 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\win">
+    <Filter Include="Header Files\win32">
       <UniqueIdentifier>{83a57055-6af4-412d-a8b9-3987dc194c3d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -47,14 +47,14 @@
     <ClInclude Include="..\snappy-stubs-internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="config.h">
-      <Filter>Header Files\win</Filter>
+    <ClInclude Include="..\win32\config.h">
+      <Filter>Header Files\win32</Filter>
     </ClInclude>
-    <ClInclude Include="snappy-dll.h">
-      <Filter>Header Files\win</Filter>
+    <ClInclude Include="..\win32\snappy-dll.h">
+      <Filter>Header Files\win32</Filter>
     </ClInclude>
-    <ClInclude Include="snappy-stubs-public.h">
-      <Filter>Header Files\win</Filter>
+    <ClInclude Include="..\win32\snappy-stubs-public.h">
+      <Filter>Header Files\win32</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
