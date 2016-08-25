@@ -1,8 +1,8 @@
-.svn
-Debug
-Release
-snappy
-snappy-static
-snappy_unittest
-snappy_unittest-static
-x64
+build*/Debug
+build*/Release
+build*/x64/Debug
+build*/x64/Release
+build*/snappy
+build*/snappy-static
+build*/snappy_unittest
+build*/snappy_unittest-static
