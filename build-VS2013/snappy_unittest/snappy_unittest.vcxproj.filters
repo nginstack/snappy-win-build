@@ -15,27 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\snappy_unittest.cc">
+    <ClCompile Include="..\..\snappy_unittest.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\snappy-test.cc">
+    <ClCompile Include="..\..\snappy-test.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\snappy-internal.h">
+    <ClInclude Include="..\..\snappy-internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\snappy.h">
+    <ClInclude Include="..\..\snappy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\snappy-sinksource.h">
+    <ClInclude Include="..\..\snappy-sinksource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\snappy-stubs-internal.h">
+    <ClInclude Include="..\..\snappy-stubs-internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\snappy-test.h">
+    <ClInclude Include="..\..\snappy-test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -65,24 +65,16 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IntDir>$(ProjectName)\$(Configuration)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IntDir>$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IntDir>$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IntDir>$(ProjectName)\$(Configuration)\</IntDir>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;HAVE_CONFIG_H;SNAPPY_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\win32</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\win32</AdditionalIncludeDirectories>
       <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
@@ -94,7 +86,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;HAVE_CONFIG_H;SNAPPY_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\win32</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\win32</AdditionalIncludeDirectories>
       <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
@@ -108,7 +100,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;HAVE_CONFIG_H;SNAPPY_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\win32</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\win32</AdditionalIncludeDirectories>
       <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
@@ -124,7 +116,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;HAVE_CONFIG_H;SNAPPY_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\win32</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\win32</AdditionalIncludeDirectories>
       <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
@@ -134,20 +126,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\snappy-c.cc" />
-    <ClCompile Include="..\snappy-sinksource.cc" />
-    <ClCompile Include="..\snappy-stubs-internal.cc" />
-    <ClCompile Include="..\snappy.cc" />
+    <ClCompile Include="..\..\snappy-c.cc" />
+    <ClCompile Include="..\..\snappy-sinksource.cc" />
+    <ClCompile Include="..\..\snappy-stubs-internal.cc" />
+    <ClCompile Include="..\..\snappy.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\snappy-c.h" />
-    <ClInclude Include="..\snappy-internal.h" />
-    <ClInclude Include="..\snappy-sinksource.h" />
-    <ClInclude Include="..\snappy-stubs-internal.h" />
-    <ClInclude Include="..\snappy.h" />
-    <ClInclude Include="..\win32\config.h" />
-    <ClInclude Include="..\win32\snappy-dll.h" />
-    <ClInclude Include="..\win32\snappy-stubs-public.h" />
+    <ClInclude Include="..\..\snappy-c.h" />
+    <ClInclude Include="..\..\snappy-internal.h" />
+    <ClInclude Include="..\..\snappy-sinksource.h" />
+    <ClInclude Include="..\..\snappy-stubs-internal.h" />
+    <ClInclude Include="..\..\snappy.h" />
+    <ClInclude Include="..\..\win32\config.h" />
+    <ClInclude Include="..\..\win32\snappy-dll.h" />
+    <ClInclude Include="..\..\win32\snappy-stubs-public.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
