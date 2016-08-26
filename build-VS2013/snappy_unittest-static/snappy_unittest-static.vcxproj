@@ -71,7 +71,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\win32</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_DEBUG;HAVE_CONFIG_H;SNAPPY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SNAPPY_STATIC;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
@@ -86,7 +86,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\win32</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_DEBUG;HAVE_CONFIG_H;SNAPPY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SNAPPY_STATIC;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
@@ -103,7 +103,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\win32</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;HAVE_CONFIG_H;SNAPPY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SNAPPY_STATIC;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
@@ -122,7 +122,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\win32</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;HAVE_CONFIG_H;SNAPPY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SNAPPY_STATIC;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
