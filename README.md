@@ -2,7 +2,7 @@
 
 snappy Windows build with Visual Studio.
 
-Current version is a fork of google/snappy.
+Current version is an up-to-date fork of google/snappy.
 
 See info-win-build for general information about the
 win-build effort.
