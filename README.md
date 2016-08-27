@@ -4,7 +4,7 @@ snappy Windows build with Visual Studio.
 
 This version is an up-to-date fork of google/snappy.
 
-See info-win-build for general information about the
+See win-build-info for general information about the
 win-build effort.
 
 To build, simply open the required solution file, and
