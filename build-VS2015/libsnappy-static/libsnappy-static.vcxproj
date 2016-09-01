@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7D79326F-1A18-466A-806B-C68F4311E5C6}</ProjectGuid>
-    <RootNamespace>snappy_lib</RootNamespace>
-    <ProjectName>snappy-static</ProjectName>
+    <RootNamespace>libsnappy-static</RootNamespace>
+    <ProjectName>libsnappy-static</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

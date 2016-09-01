@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "snappy", "snappy\snappy.vcxproj", "{9BA83853-119F-4DE0-BDB3-E190C4040369}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsnappy", "libsnappy\libsnappy.vcxproj", "{9BA83853-119F-4DE0-BDB3-E190C4040369}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "snappy_unittest", "snappy_unittest\snappy_unittest.vcxproj", "{FD8B71E7-439E-48CD-82CF-50D2CA9D8815}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9BA83853-119F-4DE0-BDB3-E190C4040369} = {9BA83853-119F-4DE0-BDB3-E190C4040369}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "snappy-static", "snappy-static\snappy-static.vcxproj", "{7D79326F-1A18-466A-806B-C68F4311E5C6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsnappy-static", "libsnappy-static\libsnappy-static.vcxproj", "{7D79326F-1A18-466A-806B-C68F4311E5C6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "snappy_unittest-static", "snappy_unittest-static\snappy_unittest-static.vcxproj", "{FF96120D-8EFA-447C-A332-645949216DF8}"
 	ProjectSection(ProjectDependencies) = postProject
