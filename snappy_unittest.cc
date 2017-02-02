@@ -393,10 +393,10 @@ static void Measure(const char* data,
   {
     // Chop the input into blocks
     size_t num_blocks = (length + block_size - 1) / block_size;
-    vector<const char*> input(num_blocks);
-    vector<size_t> input_length(num_blocks);
-    vector<string> compressed(num_blocks);
-    vector<string> output(num_blocks);
+    std::vector<const char*> input(num_blocks);
+    std::vector<size_t> input_length(num_blocks);
+    std::vector<string> compressed(num_blocks);
+    std::vector<string> output(num_blocks);
     for (size_t b = 0; b < num_blocks; b++) {
       size_t input_start = b * block_size;
       size_t input_limit = min((b+1)*block_size, length);
@@ -1053,8 +1053,11 @@ TEST(Snappy, ZeroOffsetCopyValidation) {
 
 namespace {
 
-int TestFindMatchLength(const char* s1, const char *s2, unsigned length) {
-  return snappy::internal::FindMatchLength(s1, s2, s2 + length);
+size_t TestFindMatchLength(const char* s1, const char *s2, size_t length) {
+  std::pair<size_t, bool> p =
+      snappy::internal::FindMatchLength(s1, s2, s2 + length);
+  CHECK_EQ(p.first < 8, p.second);
+  return p.first;
 }
 
 }  // namespace
@@ -1164,13 +1167,12 @@ TEST(Snappy, FindMatchLengthRandom) {
     }
     DataEndingAtUnreadablePage u(s);
     DataEndingAtUnreadablePage v(t);
-    int matched = snappy::internal::FindMatchLength(
-        u.data(), v.data(), v.data() + t.size());
+    size_t matched = TestFindMatchLength(u.data(), v.data(), t.size());
     if (matched == t.size()) {
       EXPECT_EQ(s, t);
     } else {
       EXPECT_NE(s[matched], t[matched]);
-      for (int j = 0; j < matched; j++) {
+      for (size_t j = 0; j < matched; j++) {
         EXPECT_EQ(s[j], t[j]);
       }
     }
