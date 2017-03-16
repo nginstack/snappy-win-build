@@ -155,7 +155,7 @@ static size_t MinimumRequiredOutputSpace(size_t input_size,
 
 #ifdef FASTLZ_VERSION
     case FASTLZ:
-      return max<size_t>(ceil(input_size * 1.05), 66);
+      return std::max<size_t>(ceil(input_size * 1.05), 66);
 #endif  // FASTLZ_VERSION
 
     case SNAPPY:
@@ -399,7 +399,7 @@ static void Measure(const char* data,
     std::vector<string> output(num_blocks);
     for (size_t b = 0; b < num_blocks; b++) {
       size_t input_start = b * block_size;
-      size_t input_limit = min((b+1)*block_size, length);
+      size_t input_limit = std::min((b+1)*block_size, length);
       input[b] = data+input_start;
       input_length[b] = input_limit-input_start;
 
@@ -470,7 +470,7 @@ static void Measure(const char* data,
          x.c_str(),
          block_size/(1<<20),
          static_cast<int>(length), static_cast<uint32>(compressed_size),
-         (compressed_size * 100.0) / max<size_t>(1, length),
+         (compressed_size * 100.0) / std::max<size_t>(1, length),
          comp_rate,
          urate.c_str());
 }
@@ -1307,7 +1307,7 @@ static void MeasureFile(const char* fname) {
   size_t start_len = (FLAGS_start_len < 0) ? fullinput.size() : FLAGS_start_len;
   size_t end_len = fullinput.size();
   if (FLAGS_end_len >= 0) {
-    end_len = min<size_t>(fullinput.size(), FLAGS_end_len);
+    end_len = std::min<size_t>(fullinput.size(), FLAGS_end_len);
   }
   for (size_t len = start_len; len <= end_len; len++) {
     const char* const input = fullinput.data();
