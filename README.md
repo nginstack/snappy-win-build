@@ -18,6 +18,3 @@ Additional changes:
 * Fixed a bunch of integer type size mismatches.
 
 * Applied some static_cast to reduce compiler warnings.
-
-Full list of changes against the origin git repository can be
-found in win32/snappy.diff. (C++ sources only)
