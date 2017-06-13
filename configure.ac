@@ -21,7 +21,7 @@ AC_LANG([C++])
 AC_C_BIGENDIAN
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
-AC_CHECK_HEADERS([stdint.h stddef.h sys/mman.h sys/resource.h windows.h byteswap.h sys/byteswap.h sys/endian.h sys/time.h])
+AC_CHECK_HEADERS([stdint.h stddef.h sys/mman.h sys/resource.h sys/uio.h windows.h byteswap.h sys/byteswap.h sys/endian.h sys/time.h])
 
 # Don't use AC_FUNC_MMAP, as it checks for mappings of already-mapped memory,
 # which we don't need (and does not exist on Windows).
@@ -97,9 +97,7 @@ AC_DEFUN([CHECK_EXT_COMPRESSION_LIB], [
 ])
 CHECK_EXT_COMPRESSION_LIB([z], [zlibVersion])
 CHECK_EXT_COMPRESSION_LIB([lzo2], [lzo1x_1_15_compress])
-CHECK_EXT_COMPRESSION_LIB([lzf], [lzf_compress])
 CHECK_EXT_COMPRESSION_LIB([fastlz], [fastlz_compress])
-CHECK_EXT_COMPRESSION_LIB([quicklz], [qlz_compress])
 AC_SUBST([UNITTEST_LIBS])
 
 # These are used by snappy-stubs-public.h.in.
