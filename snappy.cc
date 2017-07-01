@@ -827,7 +827,7 @@ static bool InternalUncompress(Source* r, Writer* writer) {
 template <typename Writer>
 static bool InternalUncompressAllTags(SnappyDecompressor* decompressor,
                                       Writer* writer,
-                                      uint32 compressed_len,
+                                      size_t compressed_len,
                                       uint32 uncompressed_len) {
   Report("snappy_uncompress", compressed_len, uncompressed_len);
 
