@@ -45,6 +45,14 @@
 #include <sys/mman.h>
 #endif
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#if defined(_MSC_VER)
+#include <intrin.h>
+#endif  // defined(_MSC_VER)
+
 #include "snappy-stubs-public.h"
 
 #ifndef __SNAPPY_API
@@ -81,11 +89,11 @@
 
 // Static prediction hints.
 #ifdef HAVE_BUILTIN_EXPECT
-#define PREDICT_FALSE(x) (__builtin_expect(x, 0))
-#define PREDICT_TRUE(x) (__builtin_expect(!!(x), 1))
+#define SNAPPY_PREDICT_FALSE(x) (__builtin_expect(x, 0))
+#define SNAPPY_PREDICT_TRUE(x) (__builtin_expect(!!(x), 1))
 #else
-#define PREDICT_FALSE(x) x
-#define PREDICT_TRUE(x) x
+#define SNAPPY_PREDICT_FALSE(x) x
+#define SNAPPY_PREDICT_TRUE(x) x
 #endif
 
 // This is only used for recomputing the tag byte table used during
@@ -355,10 +363,15 @@ class Bits {
   // undefined value if n == 0.  FindLSBSetNonZero() is similar to ffs() except
   // that it's 0-indexed.
   static int FindLSBSetNonZero(uint32 n);
+
+#if defined(ARCH_K8) || defined(ARCH_PPC)
   static int FindLSBSetNonZero64(uint64 n);
+#endif  // defined(ARCH_K8) || defined(ARCH_PPC)
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(Bits);
+  // No copying
+  Bits(const Bits&);
+  void operator=(const Bits&);
 };
 
 #ifdef HAVE_BUILTIN_CTZ
@@ -371,9 +384,36 @@ inline int Bits::FindLSBSetNonZero(uint32 n) {
   return __builtin_ctz(n);
 }
 
+#if defined(ARCH_K8) || defined(ARCH_PPC)
 inline int Bits::FindLSBSetNonZero64(uint64 n) {
   return __builtin_ctzll(n);
 }
+#endif  // defined(ARCH_K8) || defined(ARCH_PPC)
+
+#elif defined(_MSC_VER)
+
+inline int Bits::Log2Floor(uint32 n) {
+  unsigned long where;
+  if (_BitScanReverse(&where, n)) {
+    return where;
+  } else {
+    return -1;
+  }
+}
+
+inline int Bits::FindLSBSetNonZero(uint32 n) {
+  unsigned long where;
+  if (_BitScanForward(&where, n)) return static_cast<int>(where);
+  return 32;
+}
+
+#if defined(ARCH_K8) || defined(ARCH_PPC)
+inline int Bits::FindLSBSetNonZero64(uint64 n) {
+  unsigned long where;
+  if (_BitScanForward64(&where, n)) return static_cast<int>(where);
+  return 64;
+}
+#endif  // defined(ARCH_K8) || defined(ARCH_PPC)
 
 #else  // Portable versions.
 
@@ -407,6 +447,7 @@ inline int Bits::FindLSBSetNonZero(uint32 n) {
   return rc;
 }
 
+#if defined(ARCH_K8) || defined(ARCH_PPC)
 // FindLSBSetNonZero64() is defined in terms of FindLSBSetNonZero().
 inline int Bits::FindLSBSetNonZero64(uint64 n) {
   const uint32 bottombits = static_cast<uint32>(n);
@@ -417,6 +458,7 @@ inline int Bits::FindLSBSetNonZero64(uint64 n) {
     return FindLSBSetNonZero(bottombits);
   }
 }
+#endif  // defined(ARCH_K8) || defined(ARCH_PPC)
 
 #endif  // End portable versions.
 

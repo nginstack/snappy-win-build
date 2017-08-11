@@ -58,7 +58,9 @@ class __SNAPPY_API WorkingMemory {
   uint16 small_table_[1<<10];    // 2KB
   uint16* large_table_;          // Allocated only when needed
 
-  DISALLOW_COPY_AND_ASSIGN(WorkingMemory);
+  // No copying
+  WorkingMemory(const WorkingMemory&);
+  void operator=(const WorkingMemory&);
 };
 
 // Flat array compression that does not emit the "uncompressed length"
@@ -102,7 +104,7 @@ static inline std::pair<size_t, bool> FindMatchLength(const char* s1,
   // uncommon code paths that determine, without extra effort, whether the match
   // length is less than 8.  In short, we are hoping to avoid a conditional
   // branch, and perhaps get better code layout from the C++ compiler.
-  if (PREDICT_TRUE(s2 <= s2_limit - 8)) {
+  if (SNAPPY_PREDICT_TRUE(s2 <= s2_limit - 8)) {
     uint64 a1 = UNALIGNED_LOAD64(s1);
     uint64 a2 = UNALIGNED_LOAD64(s2);
     if (a1 != a2) {
@@ -118,7 +120,7 @@ static inline std::pair<size_t, bool> FindMatchLength(const char* s1,
   // time until we find a 64-bit block that doesn't match; then we find
   // the first non-matching bit and use that to calculate the total
   // length of the match.
-  while (PREDICT_TRUE(s2 <= s2_limit - 8)) {
+  while (SNAPPY_PREDICT_TRUE(s2 <= s2_limit - 8)) {
     if (UNALIGNED_LOAD64(s2) == UNALIGNED_LOAD64(s1 + matched)) {
       s2 += 8;
       matched += 8;
@@ -130,7 +132,7 @@ static inline std::pair<size_t, bool> FindMatchLength(const char* s1,
       return std::pair<size_t, bool>(matched, false);
     }
   }
-  while (PREDICT_TRUE(s2 < s2_limit)) {
+  while (SNAPPY_PREDICT_TRUE(s2 < s2_limit)) {
     if (s1[matched] == *s2) {
       ++s2;
       ++matched;
