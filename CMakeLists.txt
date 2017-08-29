@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-project(Snappy VERSION 1.1.6 LANGUAGES C CXX)
+project(Snappy VERSION 1.1.7 LANGUAGES C CXX)
 
 # BUILD_SHARED_LIBS is a standard CMake variable, but we declare it here to make
 # it prominent in the GUI.
@@ -8,10 +8,7 @@ option(BUILD_SHARED_LIBS "Build shared libraries(DLLs)." OFF)
 option(SNAPPY_BUILD_TESTS "Build Snappy's own tests." ON)
 
 include(TestBigEndian)
-test_big_endian(WORDS_BIG_ENDIAN)
-if(WORDS_BIG_ENDIAN)
-  add_definitions(-DWORDS_BIGENDIAN=1)
-endif(WORDS_BIG_ENDIAN)
+test_big_endian(SNAPPY_IS_BIG_ENDIAN)
 
 include(CheckIncludeFile)
 check_include_file("byteswap.h" HAVE_BYTESWAP_H)
@@ -143,14 +140,20 @@ if(SNAPPY_BUILD_TESTS)
     COMMAND "${PROJECT_BINARY_DIR}/snappy_unittest")
 endif(SNAPPY_BUILD_TESTS)
 
-install(TARGETS snappy EXPORT SnappyTargets DESTINATION lib)
+include(GNUInstallDirs)
+install(TARGETS snappy
+  EXPORT SnappyTargets
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
 install(
   FILES
     "${PROJECT_SOURCE_DIR}/snappy-c.h"
     "${PROJECT_SOURCE_DIR}/snappy-sinksource.h"
     "${PROJECT_SOURCE_DIR}/snappy.h"
     "${PROJECT_BINARY_DIR}/snappy-stubs-public.h"
-  DESTINATION include
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 include(CMakePackageConfigHelpers)
@@ -158,10 +161,14 @@ write_basic_package_version_file(
     "${PROJECT_BINARY_DIR}/SnappyConfigVersion.cmake"
     COMPATIBILITY SameMajorVersion
 )
-install(EXPORT SnappyTargets NAMESPACE Snappy:: DESTINATION lib/cmake/Snappy)
+install(
+  EXPORT SnappyTargets
+  NAMESPACE Snappy::
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/Snappy"
+)
 install(
   FILES
     "${PROJECT_SOURCE_DIR}/cmake/SnappyConfig.cmake"
     "${PROJECT_BINARY_DIR}/SnappyConfigVersion.cmake"
-  DESTINATION lib/cmake/Snappy
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/Snappy"
 )
