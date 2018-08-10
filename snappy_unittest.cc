@@ -421,7 +421,7 @@ static void VerifyIOVec(const string& input) {
       if (rnd.OneIn(5)) {
         iov[i].iov_len = 0;
       } else {
-        iov[i].iov_len = rnd.Uniform(static_cast<int32>(input.size()));
+        iov[i].iov_len = rnd.Uniform(static_cast<int32>(input.size() - used_so_far));
       }
     }
     used_so_far += iov[i].iov_len;
