@@ -1,5 +1,4 @@
 // Copyright 2011 Google Inc. All Rights Reserved.
-// Author: sesse@google.com (Steinar H. Gunderson)
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -48,17 +47,13 @@
 #endif
 #endif
 
-#if 1
-#include <stdint.h>
-#endif
+#include <cstddef>
+#include <cstdint>
+#include <string>
 
-#if 1
-#include <stddef.h>
-#endif
-
-#if 0
+#if 0  // HAVE_SYS_UIO_H
 #include <sys/uio.h>
-#endif
+#endif  // HAVE_SYS_UIO_H
 
 #define SNAPPY_MAJOR 1
 #define SNAPPY_MINOR 1
@@ -66,11 +61,9 @@
 #define SNAPPY_VERSION \
     ((SNAPPY_MAJOR << 16) | (SNAPPY_MINOR << 8) | SNAPPY_PATCHLEVEL)
 
-#include <string>
-
 namespace snappy {
 
-#if 1
+#if defined(_MSC_VER) && _MSC_VER < 1700
 typedef int8_t int8;
 typedef uint8_t uint8;
 typedef int16_t int16;
@@ -79,27 +72,29 @@ typedef int32_t int32;
 typedef uint32_t uint32;
 typedef int64_t int64;
 typedef uint64_t uint64;
-#else
-typedef signed char int8;
-typedef unsigned char uint8;
-typedef short int16;
-typedef unsigned short uint16;
-typedef int int32;
-typedef unsigned int uint32;
-typedef long long int64;
-typedef unsigned long long uint64;
-#endif
 
 typedef std::string string;
+#else
+using int8 = std::int8_t;
+using uint8 = std::uint8_t;
+using int16 = std::int16_t;
+using uint16 = std::uint16_t;
+using int32 = std::int32_t;
+using uint32 = std::uint32_t;
+using int64 = std::int64_t;
+using uint64 = std::uint64_t;
 
-#if !0
+using string = std::string;
+#endif
+
+#if !0  // !HAVE_SYS_UIO_H
 // Windows does not have an iovec type, yet the concept is universally useful.
 // It is simple to define it ourselves, so we put it inside our own namespace.
 struct iovec {
-	void* iov_base;
-	size_t iov_len;
+  void* iov_base;
+  size_t iov_len;
 };
-#endif
+#endif  // !HAVE_SYS_UIO_H
 
 }  // namespace snappy
 
