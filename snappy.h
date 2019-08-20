@@ -52,6 +52,10 @@
 #endif
 #endif
 
+#if defined(_MSC_VER) || !defined(_MSVC_LANG)
+#define constexpr const
+#endif
+
 namespace snappy {
   class Source;
   class Sink;
