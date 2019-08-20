@@ -1460,14 +1460,14 @@ static void BM_ZFlatIncreasingTableSize(int iters, int /*arg*/) {
   size_t zsize = 0;
   StartBenchmarkTiming();
   while (iters-- > 0) {
-    for (int i = 0; i < contents.size(); ++i) {
+    for (size_t i = 0; i < contents.size(); ++i) {
       snappy::RawCompress(contents[i].data(), contents[i].size(), dst[i],
                           &zsize);
     }
   }
   StopBenchmarkTiming();
 
-  for (int i = 0; i < dst.size(); ++i) {
+  for (size_t i = 0; i < dst.size(); ++i) {
     delete[] dst[i];
   }
 }
