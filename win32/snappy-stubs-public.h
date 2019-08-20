@@ -47,6 +47,10 @@
 #endif
 #endif
 
+#if (__cplusplus < 201402) || !defined(_MSVC_LANG)
+#define constexpr const
+#endif
+
 #include <cstddef>
 #include <cstdint>
 #include <string>
