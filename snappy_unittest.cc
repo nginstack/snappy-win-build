@@ -1410,7 +1410,7 @@ static void BM_ZFlat(int iters, int arg) {
 }
 BENCHMARK(BM_ZFlat)->DenseRange(0, ARRAYSIZE(files) - 1);
 
-static void BM_ZFlatAll(int iters) {
+static void BM_ZFlatAll(int iters, int /*arg*/) {
   StopBenchmarkTiming();
 
   const int num_files = ARRAYSIZE(files);
@@ -1440,10 +1440,10 @@ static void BM_ZFlatAll(int iters) {
 }
 BENCHMARK(BM_ZFlatAll);
 
-static void BM_ZFlatIncreasingTableSize(int iters) {
+static void BM_ZFlatIncreasingTableSize(int iters, int /*arg*/) {
   StopBenchmarkTiming();
 
-  QCHECK_GT(ARRAYSIZE(files), 0);
+  //QCHECK_GT(ARRAYSIZE(files), 0);
   const std::string base_content =
       ReadTestDataFile(files[0].filename, files[0].size_limit);
 
